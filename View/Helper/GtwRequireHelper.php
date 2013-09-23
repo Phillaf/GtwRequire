@@ -8,12 +8,17 @@
 class GtwRequireHelper extends AppHelper {
     
     public function init($config, $require = '//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.8/require.min.js'){
-       $modules = implode(',',$this->_View->get('requiredeps'));
-       return
+        $modules = '';
+        if (!is_null($this->_View->get('requiredeps'))){
+            $modules = "require([". implode(',',$this->_View->get('requiredeps')) . "]);";
+        }
+        $configStripped = substr( $config, strrpos( $config, '/' )+1 );
+        
+        return
            "<script data-main='".$config."' src='".$require."'></script>
             <script type='text/javascript'>
-                require(['js/config.js'], function () {
-                    require([". $modules ."]);
+                require(['". $configStripped . "'], function () {
+                    ". $modules ."
                 });
             </script>";
     }
