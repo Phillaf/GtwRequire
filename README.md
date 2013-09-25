@@ -6,8 +6,6 @@ This module facilitate the use of Requirejs through the use of a helper.
 * Define your own config file, load modules according to your needs.
 * Possibility of auto-loading modules based on action/controller.
 
-This plugin lets you manage requirejs. Modules can be loaded using the requirejs helper.
-
 ## Installation
 
 Load the plugin using bootstrap.php
