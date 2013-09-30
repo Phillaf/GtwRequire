@@ -8,6 +8,14 @@ This module facilitate the use of Requirejs through the use of a helper.
 
 ## Installation
 
+Ensure require is present in composer.json. This will install the plugin into Plugin/GtwRequire:
+
+    {
+        "require": {
+            "phillaf/gtw_require": "*@dev"
+        }
+    }
+
 Load the plugin using bootstrap.php
 
     CakePlugin::load('GtwRequire');
