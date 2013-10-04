@@ -52,15 +52,24 @@ And you're done.
 
 If you want to auto-load action-specific or controller-specific files, you can create a folder structure like the one used in the Views.
 
-* base/
-    * common.js
-    * ControllerName/
-        * action.js
-    * ControllerName2.js
+    ├── lib
+    │   └── librairie1.js
+    │   └── librairie2.js
+    ├── app
+    │   └── homemade1.js
+    │   └── homemade2.js
+    ├── base
+    │   ├── Random /* for Random controller */
+    │   │   ├── someaction.js
+    │   │   ├── otheraction.js
+    │   ├── base.js
+    │   ├── RandomController.js
+    │   ├── AnotherController.js
+    └── reqauire.js
 
 Then, you can then auto-load modules using this command in your default template. First param is the base path of your folder structure. second param is the name of the default file.
     
-    <?php echo $this->Require->basemodule('base', 'common');?>
+    <?php echo $this->Require->basemodule('basePath', 'baseModuleName');?>
 
     
 ## Copyright and license
