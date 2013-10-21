@@ -18,7 +18,7 @@ Ensure require is present in composer.json. This will install the plugin into Pl
 
 Load the plugin using bootstrap.php
 
-    CakePlugin::load('GtwRequire');
+    CakePlugin::load('GtwRequire' => array('bootstrap' => 'init'));
     
 Alias the HTML helper in your AppController.php
 
@@ -32,13 +32,14 @@ Define Add your modules dependencies from your views and view blocks using the r
 
     <?php echo $this->Require->req('app/module_name'); ?>
     
-Create a config file as specified by requirejs.
+Create a config file as specified by requirejs. `basepath` is the application base path. Some Gtw Plugins are dependent on this to make ajax calls.
 
     // app/webroot/js/config.js
     requirejs.config({
         baseUrl: 'js/lib',
         paths: {
-            app: '../app'
+            app: '../app',
+            basepath: '/GtwRequire/js/app/basepath' //application base path
         }
     });
     
@@ -46,7 +47,7 @@ Initialize the main requirejs module at the bottom of your view file. This takes
 
     <?php echo $this->Require->init('/js/config');?>
     
-And you're done. 
+And you're done.
 
 ## Path-specific includes
 
@@ -71,8 +72,11 @@ Then, you can then auto-load modules using this command in your default template
     
     <?php echo $this->Require->basemodule('basePath', 'baseModuleName');?>
 
+## Performance    
+    
+This plugin creates a symlink to your webroot directory to make it easier on CakePHP's router. However, the symlink only needs to be created once. Therefore you can remove the folder check from every page load by changing your call to `CakePlugin::load('GtwRequire');` in bootstrap.php
     
 ## Copyright and license
-Author: Philippe Lafrance    
-Copyright 2013 [Gintonic Web](http://gintonicweb.com)    
+Author: Philippe Lafrance
+Copyright 2013 [Gintonic Web](http://gintonicweb.com)
 Licensed under the [Apache 2.0 license](http://www.apache.org/licenses/LICENSE-2.0.html)

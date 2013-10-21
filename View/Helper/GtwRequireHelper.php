@@ -7,6 +7,8 @@
 
 class GtwRequireHelper extends AppHelper {
     
+    public $helpers = array('Html');
+    
     public function init($config, $require = '//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.8/require.min.js'){
         $modules = '';
         if (!is_null($this->_View->get('requiredeps'))){
@@ -15,9 +17,11 @@ class GtwRequireHelper extends AppHelper {
         $configStripped = substr( $config, strrpos( $config, '/' )+1 );
         
         return
-           "<script data-main='".$config."' src='".$require."'></script>
+            "<script>var baseUrl = '". $this->Html->url('/', true) ."';</script>
+            <script data-main='".$config."' src='".$require."'></script>
             <script type='text/javascript'>
                 require(['". $configStripped . "'], function () {
+                    require (['basepath']);
                     ". $modules ."
                 });
             </script>";
