@@ -16,7 +16,7 @@ Copy this plugin in a folder named `app/Plugin/GtwRequire` or add these lines to
         }
     }
     
-Create a symlink from this plugin's webroot to the application webroot by running `Console/cake Symlink` or the lines below
+Create a symlink from this plugin's webroot to the application webroot by running `Console/cake symlink` or the lines below
 
     # On windows
     mklink /J app\webroot\GtwUi app\Plugin\GtwUi\webroot
