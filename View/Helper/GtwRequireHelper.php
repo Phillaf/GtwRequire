@@ -38,7 +38,7 @@ class GtwRequireHelper extends AppHelper {
     public function ajax_req($name){
         return 
             '<script>'.
-                'require(["'$name'"]);'.
+                'require(["'.$name.'"]);'.
             '</script>';
     }
     
