@@ -36,14 +36,13 @@ Add the Require helper to your AppController.php
     
 ## Including javascript
 
-Create a config file as specified by requirejs. `basepath` is the application base path. Most Gtw Plugins depend on this. You can find a more exhaustive example [here](https://gist.github.com/Phillaf/7051827).
+Create a config file as specified by requirejs. You can find a more exhaustive example [here](https://gist.github.com/Phillaf/7051827).
 
     // app/webroot/js/config.js
     requirejs.config({
         baseUrl: 'js/lib',
         paths: {
             app: '../app',
-            basepath: '/GtwRequire/js/basepath' //application base path
         }
     });
     
