@@ -1,26 +1,34 @@
 # Requirejs plugin for CakePHP
 
-This module facilitate the use of Requirejs through the use of a helper.
+This module facilitate the use of Requirejs through the Require helper.
 
 * Modules can be added from views or view blocks
 * Define your own config file, load modules according to your needs.
-* Possibility of auto-loading modules based on action/controller.
+* Possibility of auto-loading modules based on action/controller names.
 
 ## Installation
 
-Ensure require is present in composer.json. This will install the plugin into Plugin/GtwRequire:
+Copy this plugin in a folder named `app/Plugin/GtwRequire` or add these lines to your `composer.json` file :
 
     {
         "require": {
             "phillaf/gtw_require": "*@dev"
         }
     }
-
-Load the plugin using bootstrap.php
-
-    CakePlugin::load('GtwRequire' => array('bootstrap' => 'init'));
     
-Alias the HTML helper in your AppController.php
+Create a symlink from this plugin's webroot to the application webroot by running `Console/cake Symlink` or the lines below
+
+    # On windows
+    mklink /J app\webroot\GtwUi app\Plugin\GtwUi\webroot
+
+    # On linux
+    ln -s app/Plugin/GtwUi/webroot app/webroot/GtwUi
+
+Load the plugin by adding this line to `app/Config/bootstrap.php`
+
+    CakePlugin::load('GtwRequire');
+    
+Add the Require helper to your AppController.php
 
     public $helpers = array(
         'Require' => array('className' => 'GtwRequire.GtwRequire'),
@@ -28,54 +36,52 @@ Alias the HTML helper in your AppController.php
     
 ## Including javascript
 
-Define Add your modules dependencies from your views and view blocks using the req function.
-
-    <?php echo $this->Require->req('app/module_name'); ?>
-    
-Create a config file as specified by requirejs. `basepath` is the application base path. Some Gtw Plugins are dependent on this to make ajax calls.
+Create a config file as specified by requirejs. `basepath` is the application base path. Most Gtw Plugins depend on this. You can find a more exhaustive example [here](https://gist.github.com/Phillaf/7051827).
 
     // app/webroot/js/config.js
     requirejs.config({
         baseUrl: 'js/lib',
         paths: {
             app: '../app',
-            basepath: '/GtwRequire/js/app/basepath' //application base path
+            basepath: '/GtwRequire/js/basepath' //application base path
         }
     });
     
-Initialize the main requirejs module at the bottom of your view file. This takes in param the path of your config file.
+Load modules from your views, view blocks and elements using the req function.
 
-    <?php echo $this->Require->init('/js/config');?>
+    <?php echo $this->Require->req('my/module'); ?>
+
+Load the main requirejs module at the bottom of your layout file. The param is the path of your config file.
+
+    <?php echo $this->Require->load('/js/config');?>
     
-And you're done.
+The `req()` function can only be called before `load()`. However, in some case like with ajax views, you'll need to add modules dynamically. For this you can use:
 
+    <?php echo $this->Require->ajax_req('my/module');?>
+    
 ## Path-specific includes
 
 If you want to auto-load action-specific or controller-specific files, you can create a folder structure like the one used in the Views.
 
     ├── lib
-    │   └── librairie1.js
-    │   └── librairie2.js
+    │   └── library1.js
+    │   └── library2.js
     ├── app
     │   └── homemade1.js
     │   └── homemade2.js
     ├── base
-    │   ├── Random /* for Random controller */
+    │   ├── Example /* folder containing ExampleController.php actions */
     │   │   ├── someaction.js
     │   │   ├── otheraction.js
     │   ├── base.js
-    │   ├── RandomController.js
+    │   ├── ExampleController.js
     │   ├── AnotherController.js
-    └── reqauire.js
+    └── require.js
 
-Then, you can then auto-load modules using this command in your default template. First param is the base path of your folder structure. second param is the name of the default file.
+To enable auto-load, call the following function above your `load()` call. First param is the base path of your folder structure, second param is the name of the default file.
     
     <?php echo $this->Require->basemodule('basePath', 'baseModuleName');?>
 
-## Performance    
-    
-This plugin creates a symlink to your webroot directory to make it easier on CakePHP's router. However, the symlink only needs to be created once. Therefore you can remove the folder check from every page load by changing your call to `CakePlugin::load('GtwRequire');` in bootstrap.php
-    
 ## Copyright and license
 Author: Philippe Lafrance
 Copyright 2013 [Gintonic Web](http://gintonicweb.com)

@@ -9,7 +9,7 @@ class GtwRequireHelper extends AppHelper {
     
     public $helpers = array('Html');
     
-    public function init($config, $require = '//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.8/require.min.js'){
+    public function load($config, $require = '//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.8/require.min.js'){
         $modules = '';
         if (!is_null($this->_View->get('requiredeps'))){
             $modules = "require([". implode(',',$this->_View->get('requiredeps')) . "]);";
@@ -33,6 +33,13 @@ class GtwRequireHelper extends AppHelper {
         }
         array_push($this->_View->viewVars['requiredeps'], "'".$name."'");
         return;
+    }
+    
+    public function ajax_req($name){
+        return 
+            '<script>'.
+                'require(["'$name'"]);'.
+            '</script>';
     }
     
     public function basemodule($base, $default){
