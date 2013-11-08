@@ -19,10 +19,10 @@ Copy this plugin in a folder named `app/Plugin/GtwRequire` or add these lines to
 Create a symlink from this plugin's webroot to the application webroot by running `Console/cake symlink` or the lines below
 
     # On windows
-    mklink /J app\webroot\GtwUi app\Plugin\GtwUi\webroot
+    mklink /J app\webroot\GtwRequire app\Plugin\GtwRequire\webroot
 
     # On linux
-    ln -s app/Plugin/GtwUi/webroot app/webroot/GtwUi
+    ln -s app/Plugin/GtwRequire/webroot app/webroot/GtwRequire
 
 Load the plugin by adding this line to `app/Config/bootstrap.php`
 
@@ -81,7 +81,7 @@ To enable auto-load, call the following function above your `load()` call. First
     
     <?php echo $this->Require->basemodule('basePath', 'baseModuleName');?>
 
-## Copyright and license
-Author: Philippe Lafrance
-Copyright 2013 [Gintonic Web](http://gintonicweb.com)
+## Copyright and license   
+Author: Philippe Lafrance   
+Copyright 2013 [Gintonic Web](http://gintonicweb.com)  
 Licensed under the [Apache 2.0 license](http://www.apache.org/licenses/LICENSE-2.0.html)
