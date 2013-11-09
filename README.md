@@ -36,13 +36,14 @@ Add the Require helper to your AppController.php
     
 ## Including javascript
 
-Create a config file as specified by requirejs. You can find a more exhaustive example [here](https://gist.github.com/Phillaf/7051827).
+Create a config file as specified by requirejs. You can find a more exhaustive example [here](https://gist.github.com/Phillaf/7051827). 
 
     // app/webroot/js/config.js
     requirejs.config({
         baseUrl: 'js/lib',
         paths: {
             app: '../app',
+            basepath: '/GtwRequire/js/basepath' //application base path
         }
     });
     
@@ -80,6 +81,19 @@ If you want to auto-load action-specific or controller-specific files, you can c
 To enable auto-load, call the following function above your `load()` call. First param is the base path of your folder structure, second param is the name of the default file.
     
     <?php echo $this->Require->basemodule('basePath', 'baseModuleName');?>
+
+## Application Base Path
+
+Sometimes you need to call controllers and actions from your javascript. In order to keep your .js module functionnal when websites are hosted on subdomains, use `basepath` to prefix your calls. Here's how modules can make use of this:--
+
+    require(['jquery','basepath'], function ($, basepath) {
+        $('.something').click(function(){
+            $.get( basepath+ "plugin_name/controller_name/action_name/", function(data){
+                // do things
+            });
+        });
+    });
+
 
 ## Copyright and license   
 Author: Philippe Lafrance   
